@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="bja_sale_view_order_form">
+            <field name="name">bja.sale.view.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='validity_date']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//page[@name='other_information']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='action_quotation_send']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='action_quotation_send']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='preview_sale_order']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='note']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='state']" position="replace">
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sale"/>
+                </xpath>
+
+                <xpath expr="//field[@name='commitment_date']" position="replace" />
+                <xpath expr="//field[@name='date_order']" position="replace" />
+
+                <xpath expr="//field[@name='payment_term_id']" position="before">
+                    <field name="date_order" attrs="{'invisible': [('state', 'in', ['sale', 'done', 'cancel'])]}"/>
+                    <field name="commitment_date" groups="sale.group_sale_order_dates"/>
+                </xpath>
+
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="employee_id"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="bja_sale_order_form_quote">
+            <field name="name">bja.sale.order.form.quote</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_management.sale_order_form_quote"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='sale_order_option_ids']/parent::page" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="bja_sale_view_quotation_tree_with_onboarding">
+            <field name="name">bja_sale_view_quotation_tree_with_onboarding</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+            <field name="priority">20</field>
+            <field name="arch" type="xml">
+                <field name="user_id" position="attributes" >
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="expected_date" position="attributes" >
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="user_id" position="before" >
+                    <field name="employee_id"/>
+                </field>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="bja_view_order_tree_on_sale">
+            <field name="name">bja_view_order_tree_on_sale</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="priority">22</field>
+            <field name="arch" type="xml">
+                <field name="user_id" position="attributes" >
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="expected_date" position="attributes" >
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="user_id" position="before" >
+                    <field name="employee_id"/>
+                </field>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record model="ir.ui.view" id="bja_sale_sale_order_view_search_inherit_quotation">
+            <field name="name">bja_sale_sale_order_view_search_inherit_quotation</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+            <field name="priority">20</field>
+            <field name="arch" type="xml">
+                <filter name="salesperson" position="after" >
+                    <filter name="group_by_salesman" string="Salesman" context="{'group_by':'employee_id'}"/>
+                </filter>
+                <filter name="salesperson" position="attributes" >
+                    <attribute name="invisible">1</attribute>
+                </filter>
+            </field>
+        </record>
+
+    </data>
+</odoo>
