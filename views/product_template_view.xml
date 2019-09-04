@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="bja_product_template_only_form_view">
+            <field name="name">bja.product.template.only.form.view</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="priority">20</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='type']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//div[@name='options']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//page[@name='sales']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//page[@name='inventory']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='barcode']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//div[@name='weight']/preceding::label[1]" position="replace" />
+                <xpath expr="//div[@name='weight']" position="replace" />
+                <xpath expr="//div[@name='standard_price_uom']" position="after">
+                    <label for="weight"/>
+                    <div class="o_row" name="weight">
+                        <field name="weight"/>
+                        <span>
+                            <field name="weight_uom_name"/>
+                        </span>
+                    </div>
+                </xpath>
+
+                <group name="bill" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </group>
+
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="bja_view_product_supplier_inherit">
+            <field name="name">bja.view.product.supplier.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="purchase.view_product_supplier_inherit"/>
+            <field name="priority">20</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='description_purchase']/parent::group" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="bja_product_template_tree">
+            <field name="name">bja.product.template.tree</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_tree_view"/>
+            <field name="priority">20</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='type']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="bja_product_template_form_view_procurement_button">
+            <field name="name">bja.product.template.form.view.procurement.button</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="stock.product_template_form_view_procurement_button"/>
+            <field name="priority">20</field>
+            <field name="arch" type="xml">
+                <button name="action_view_orderpoints" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+                <button name="%(stock.action_stock_rules_report)d" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+            </field>
+        </record>
+
+    </data>
+</odoo>
