@@ -46,6 +46,15 @@
                     <field name="employee_id"/>
                 </xpath>
 
+                <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="after">
+                    <field name="bja_product_uom_id" />
+                </xpath>
+                
+                <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="before">
+                    <field name="price_weight" />
+                    <field name="product_weight" />
+                </xpath>
+
             </field>
         </record>
 
