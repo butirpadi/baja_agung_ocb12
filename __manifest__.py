@@ -30,6 +30,8 @@
         'views/sale_view.xml',
         'views/employee_view.xml',
         'views/product_uom_view.xml',
+        'views/purchase_view.xml',
+        'views/stock_picking_view.xml',
         'views/hide_menu_view.xml',
     ],
     # only loaded in demonstration mode

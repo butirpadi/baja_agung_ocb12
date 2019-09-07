@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="bja_stock_view_picking_form">
+            <field name="name">bja_stock_view_picking_form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date_done']" position="replace">
+                    <field name="date_done" string="Transfer Date" attrs="{'readonly': [('state', 'in', ('done', 'cancel'))]}"/>
+                    
+                </xpath>
+
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="picking_type_code" invisible="1" />
+                    <field name="vendor_reference" attrs="{'invisible':[('picking_type_code', '!=', 'incoming')]}" />
+                </xpath>
+
+                <field name="partner_id" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </field>
+
+                <button name="button_scrap" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+
+                <page name="extra" position="attributes" >
+                    <attribute name="invisible">1</attribute>
+                </page>
+
+                <button name="%(stock.act_stock_return_picking)d" position="attributes" >
+                    <attribute name="invisible">1</attribute>
+                </button>
+                
+            </field>
+        </record>
+
+        <report
+            string="Picking Operations"
+            id="stock.action_report_picking"
+            model="stock.picking"
+            report_type="qweb-pdf"
+            name="stock.report_picking"
+            file="stock.report_picking_operations"
+            print_report_name="'Picking Operations - %s - %s' % (object.partner_id.name or '', object.name)"
+            menu="False"
+        />
+    </data>
+</odoo>

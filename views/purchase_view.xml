@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="bja_purchase_order_form">
+            <field name="name">bja_purchase_order_form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="priority">20</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='payment_term_id']" position="replace"/>
+                <xpath expr="//field[@name='date_order']" position="after">
+                    <field name="payment_term_id" options="{'no_open': True, 'no_create': True}" attrs="{'readonly': ['|', ('invoice_status','=', 'invoiced'), ('state', '=', 'done')]}"/>
+                </xpath>
+
+                <xpath expr="//page[@name='purchase_delivery_invoice']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <button name="action_rfq_send" states="draft" type="object" context="{'send_rfq':True}" class="oe_highlight" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+                <button name="print_quotation" type="object" states="draft" class="oe_highlight" groups="base.group_user" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+                <button name="action_rfq_send" states="sent" type="object" context="{'send_rfq':True}" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+                <button name="action_rfq_send" states="purchase" type="object" context="{'send_rfq':False}" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+
+                <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                
+                <xpath expr="//field[@name='order_line']/tree/field[@name='date_planned']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="after">
+                    <field name="bja_product_uom_id" />
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="before">
+                    <field name="price_weight" />
+                    <field name="product_weight" />
+                </xpath>
+            </field>
+        </record>
+
+        <!-- purchase.order inherit tree view -->
+        <record id="bja_purchase_purchase_order_tree" model="ir.ui.view">
+            <field name="name">bja_purchase_purchase_order_tree</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+            <field name="priority">20</field>
+            <field name="arch" type="xml">
+                <!-- Add your xpath here -->
+                <field name="user_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="origin" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

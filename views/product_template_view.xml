@@ -47,6 +47,14 @@
                     <attribute name="invisible">1</attribute>
                 </group>
 
+                <button name="action_update_quantity_on_hand" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+                
+                <button name="%(stock.action_product_replenish)d" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+
             </field>
         </record>
 
