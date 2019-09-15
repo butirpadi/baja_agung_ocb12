@@ -67,6 +67,15 @@
                 <xpath expr="//field[@name='description_purchase']/parent::group" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
+
+                <xpath expr="//field[@name='seller_ids']" position="replace">
+                    <field name="seller_ids" context="{'default_product_tmpl_id':context.get('product_tmpl_id',active_id), 'product_template_invisible_variant': True}" nolabel="1" readonly="1" >
+                        <tree >
+                            <field name="name" />
+                            <field name="price" />
+                        </tree>
+                    </field>
+                </xpath>              
             </field>
         </record>
 
@@ -78,6 +87,9 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='type']" position="attributes">
                     <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='categ_id']" position="after">
+                    <field name="weight"/>
                 </xpath>
             </field>
         </record>
@@ -96,6 +108,7 @@
                 </button>
             </field>
         </record>
+
 
     </data>
 </odoo>

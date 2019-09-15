@@ -19,7 +19,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'stock', 'tax_remove_ocb12'],
+    'depends': ['base', 'stock', 'purchase', 'sale_management', 'hr', 'tax_remove_ocb12'],
 
     # always loaded
     'data': [
@@ -32,6 +32,7 @@
         'views/product_uom_view.xml',
         'views/purchase_view.xml',
         'views/stock_picking_view.xml',
+        'views/account_invoice_view.xml',
         'views/hide_menu_view.xml',
     ],
     # only loaded in demonstration mode

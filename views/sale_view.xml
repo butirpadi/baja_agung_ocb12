@@ -106,6 +106,12 @@
                 <field name="user_id" position="before" >
                     <field name="employee_id"/>
                 </field>
+                <xpath expr="//field[@name='confirmation_date']" position="before">
+                    <field name="date_order"/>
+                </xpath>
+                <xpath expr="//field[@name='confirmation_date']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
             </field>
         </record>
 
