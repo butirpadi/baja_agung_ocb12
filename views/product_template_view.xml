@@ -8,7 +8,7 @@
             <field name="priority">20</field>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='default_code']" position="after">
-                    <field name="bja_product_uom_id" />
+                    <field name="bja_product_uom_id" options="{'no_create_edit': True, 'no_create': True, 'no_edit' : True, 'no_open':True}" />
                 </xpath>
 
                 <xpath expr="//field[@name='type']" position="attributes">
@@ -50,10 +50,14 @@
                 <button name="action_update_quantity_on_hand" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </button>
-                
+
                 <button name="%(stock.action_product_replenish)d" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </button>
+
+                <xpath expr="//field[@name='categ_id']" position="attributes">
+                    <attribute name="options">{'no_create_edit': True, 'no_create': True, 'no_edit' : True, 'no_open':True}</attribute>
+                </xpath>
 
             </field>
         </record>
@@ -69,13 +73,13 @@
                 </xpath>
 
                 <xpath expr="//field[@name='seller_ids']" position="replace">
-                    <field name="seller_ids" context="{'default_product_tmpl_id':context.get('product_tmpl_id',active_id), 'product_template_invisible_variant': True}" nolabel="1" readonly="1" >
+                    <field name="seller_ids" context="{'default_product_tmpl_id':context.get('product_tmpl_id',active_id), 'product_template_invisible_variant': True}" nolabel="1" readonly="1">
                         <tree >
                             <field name="name" />
                             <field name="price" />
                         </tree>
                     </field>
-                </xpath>              
+                </xpath>
             </field>
         </record>
 
@@ -106,6 +110,26 @@
                 <button name="%(stock.action_stock_rules_report)d" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </button>
+            </field>
+        </record>
+
+        <!-- replace product action -->
+        <record id="sale.product_template_action" model="ir.actions.act_window">
+            <field name="name">Products</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.template</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="product.product_template_kanban_view"/>
+            <field name="search_view_id" ref="product.product_template_search_view"/>
+            <field name="context">{"search_default_filter_to_sell":1, "sale_multi_pricelist_product_template": 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new product
+                </p><p>
+                    You must define a product for everything you purchase,
+                    whether it's a physical product, a consumable or services.
+                </p>
             </field>
         </record>
 
