@@ -8,3 +8,5 @@ from . import product_uom
 from . import product_template
 from . import purchase_order_line
 from . import stock_picking
+from . import expense_category
+from . import bja_expense

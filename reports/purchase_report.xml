@@ -1,0 +1,332 @@
+<odoo>
+    <data>
+        <template id="ajm_sanwa_purchase_report">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.basic_layout">
+                    <div class="page" style="font-size: 10pt;">
+                        <style type="text/css">
+                            table.table-bordered, table.table-bordered thead tr th, table.table-bordered tbody tr td {
+                                border: black thin solid !important;
+                            }
+                            table.table thead tr th{
+                                text-align:center;
+                                vertical-align:middle;
+                            }
+                        </style>
+
+                        <!-- Header -->
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <h4 t-field="user.company_id.name" style="margin: 0;" />
+                                <small>
+                                    <t t-if="user.company_id.phone">
+                                        Phone :  <span t-field="user.company_id.phone" />
+                                    </t>
+                                    <t t-if="user.company_id.fax">
+                                        Fax :  <span t-field="user.company_id.fax" />
+                                    </t>
+                                </small>
+                                <![CDATA[&nbsp;]]>
+                                <br/>
+                                <br/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4"></div>
+                            <div class="col-4"></div>
+                            <div class="col-4 text-left" style="font-size: 8pt;">
+                                <strong>Office &amp; Factory</strong>
+                                <br/>
+                                <span t-if="user.company_id.street" t-field="user.company_id.street"></span>
+                                <br/>
+                                <span t-if="user.company_id.street2" t-field="user.company_id.street2"></span>
+                                <br/>
+                                <span t-if="user.company_id.city" t-field="user.company_id.city"></span><![CDATA[&nbsp;]]>
+                                <span t-if="user.company_id.state_id" t-field="user.company_id.state_id"></span><![CDATA[&nbsp;]]>
+                                <span t-if="user.company_id.country_id" t-field="user.company_id.country_id"></span><![CDATA[&nbsp;]]>
+                                <span t-if="user.company_id.zip" t-field="user.company_id.zip"></span>
+                                <![CDATA[&nbsp;]]>
+                                <br/>
+                                <br/>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-4"></div>
+                            <div class="col-4 text-center ">
+                                <h5>PURCHASE ORDER</h5>
+                                <![CDATA[&nbsp;]]>
+                                <br/>
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <table class="table table-sm table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            <td rowspan="2" colspan="3">
+                                                <strong>SHIP TO</strong>
+                                                <br/>
+                                                <span t-field="doc.picking_type_id.warehouse_id.partner_id" />
+                                                <br/>
+                                                <span t-field="doc.picking_type_id.warehouse_id.partner_id.street" />
+                                                <br/>
+                                                <span t-field="doc.picking_type_id.warehouse_id.partner_id.street2" />
+                                                <br/>
+                                                <span t-field="doc.picking_type_id.warehouse_id.partner_id.city" />
+                                                <![CDATA[&nbsp;]]>
+                                                <span t-field="doc.picking_type_id.warehouse_id.partner_id.state_id" />
+                                                <![CDATA[&nbsp;]]>
+                                                <span t-field="doc.picking_type_id.warehouse_id.partner_id.country_id" />
+                                                <![CDATA[&nbsp;]]>
+                                                <span t-field="doc.picking_type_id.warehouse_id.partner_id.zip" />
+                                                <![CDATA[&nbsp;]]>
+                                            </td>
+                                            <td colspan="3">
+                                                <strong>DATE ORDER : </strong>
+                                                <br/>
+                                                <span t-field="doc.date_order" t-options='{"format": "MMMM dd yyyy"}' />
+                                            </td>
+                                            <td colspan="2">
+                                                <strong>PURCHASE ORDER : </strong>
+                                                <br/>
+                                                <span t-field="doc.name" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">
+                                                <strong>TERMS : </strong>
+                                                <br/>
+                                                <span t-field="doc.payment_term_id" />
+                                            </td>
+                                            <td colspan="2">
+                                                <strong>SHIPMENT : </strong>
+                                                <br/>
+                                                <span t-field="doc.shipment_by" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan="2" colspan="3">
+                                                <strong>SUPPLIER</strong>
+                                                <br/>
+                                                <span t-if="doc.partner_id.company_type == 'person'" t-field="doc.partner_id.parent_id.name" />
+                                                <span t-else="doc.partner_id.company_type == 'person'" t-field="doc.partner_id.name" />
+                                                <br/>
+                                                <span t-field="doc.partner_id.street" />
+                                                <br/>
+                                                <span t-if="doc.partner_id.street2" t-field="doc.partner_id.street2" />
+                                                <br t-if="doc.partner_id.street2" />
+                                                <span t-field="doc.partner_id.city" />
+                                                <![CDATA[&nbsp;]]>
+                                                <span t-field="doc.partner_id.state_id" />
+                                                <![CDATA[&nbsp;]]>
+                                                <span t-field="doc.partner_id.country_id" />
+                                                <![CDATA[&nbsp;]]>
+                                                <span t-field="doc.partner_id.zip" />
+                                                <![CDATA[&nbsp;]]>
+                                                <br/>
+                                                <t t-if="doc.partner_id.company_type == 'person'">
+                                                    <span>Attn : </span>
+                                                    <span t-field="doc.partner_id.title" />
+                                                    <span t-field="doc.partner_id.name" />
+                                                </t>
+                                            </td>
+                                            <td colspan="3">
+                                                <strong>DELIVERY POINT : </strong>
+                                                <br/>
+                                                <span t-field="doc.picking_type_id.warehouse_id.name" />
+                                            </td>
+                                            <td rowspan="2" colspan="2">
+                                                <strong>DELIVERY : </strong>
+                                                <br/>
+                                                <div class="text-center">
+                                                    <strong>ETA</strong>
+                                                    <br/>
+                                                    <span t-field="doc.eta_delivery" t-options='{"format": "MMMM dd yyyy"}' />
+                                                    <br/>
+                                                    <span t-field="doc.eta_point" />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">
+                                                <strong t-field="doc.incoterm_id.code" />
+                                                <span>:</span>
+                                                <br/>
+                                                <span t-field="doc.incoterm_desc" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">
+                                                <strong>NO</strong>
+                                            </td>
+                                            <td class="text-center">
+                                                <strong></strong>
+                                            </td>
+                                            <td class="text-center">
+                                                <strong>CODE/TYPE</strong>
+                                            </td>
+                                            <td class="text-center">
+                                                <strong>QTY</strong>
+                                            </td>
+                                            <td class="text-center">
+                                                <strong>UNIT</strong>
+                                            </td>
+                                            <td class="text-center">
+                                                <strong>UNIT PRICE</strong>
+                                                <br/>
+                                                <strong>
+                                                    <span t-field="doc.currency_id.symbol" />
+                                                </strong>
+                                            </td>
+                                            <td class="text-center">
+                                                <strong>AMOUNT<br/>
+                                                </strong>
+                                                <strong>
+                                                    <span t-field="doc.currency_id.symbol" />
+                                                </strong>
+                                            </td>
+                                            <td class="text-center">
+                                                <strong>REMARKS</strong>
+                                            </td>
+
+                                        </tr>
+                                        <t t-set="rownum" t-value="1"/>
+                                        <t t-set="total_qty" t-value="0"/>
+                                        <t t-set="total_amount" t-value="0"/>
+                                        <t t-foreach="doc.order_line" t-as="line">
+                                            <tr>
+                                                <td class="text-center">
+                                                    <span t-esc="rownum" />
+                                                </td>
+                                                <td>
+                                                    <span t-field="line.product_id.categ_id.name" />
+                                                </td>
+                                                <td>
+                                                    <span t-field="line.product_id.name" />
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-field="line.product_qty" />
+                                                </td>
+                                                <td class="text-center">
+                                                    <span t-field="line.product_uom" />
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-field="line.price_unit" />
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-field="line.price_subtotal" />
+                                                </td>
+                                                <td >
+                                                    <span t-field="line.remarks" />
+                                                </td>
+                                            </tr>
+                                            <t t-set="rownum" t-value="rownum+1"/>
+                                            <t t-set="total_qty" t-value="total_qty+line.product_qty"/>
+                                            <t t-set="total_amount" t-value="total_amount+line.price_subtotal"/>
+                                        </t>
+                                        <tr>
+                                            <td colspan="8">
+                                                <br/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3" class="text-center">
+                                                <strong>TOTAL</strong>
+                                            </td>
+                                            <td class="text-right">
+                                                <strong t-esc="'{0:,.2f}'.format(total_qty)" />
+                                            </td>
+                                            <td  ></td>
+                                            <td  ></td>
+                                            <td class="text-right">
+                                                <strong t-esc="'{0:,.2f}'.format(total_amount)" />
+                                            </td>
+                                            <td  ></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-5">
+                                <br/>
+                                <br/>
+                                <strong>NOTE : WE ONLY RECEIVED RoHS Free Only</strong>
+                                <br/>
+                                <br/>
+                                <strong>CONFIRMED BY SUPPLIER</strong>
+                                <br/>
+
+                                <table class="table table-sm table-bordered" style="font-size:8pt!important;">
+                                    <thead>
+                                        <tr>
+                                            <th style="height:50px;" class="text-center text-middle"  >Sign/Company</th>
+                                            <th class="text-center">Received Date</th>
+                                            <th class="text-center">Delivery Date <br/>
+                                                (Schedule)
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="col-7">
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <strong t-field="user.company_id.name" />
+                                <br/>
+                                <table class="table table-sm table-bordered" style="font-size:8pt!important;">
+                                    <thead>
+                                        <tr>
+                                            <th style="height:50px;" class="text-center">Approve</th>
+                                            <th class="text-center">Check II</th>
+                                            <th class="text-center">Check I</th>
+                                            <th class="text-center">Prepare
+                                            <br/></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="footer">
+
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

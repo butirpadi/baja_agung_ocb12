@@ -1,2 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_bja_product_uom,baja_agung_ocb12.bja_product_uom_access,model_bja_product_uom,base.group_user,1,1,1,1
+access_bja_expense_category, baja_agung_ocb12.bja_expense_category,model_expense_category,base.group_user,1,1,1,1
+access_bja_expense, baja_agung_ocb12.bja_expense,model_bja_expense,base.group_user,1,1,1,1
+access_account_full_reconcile_group_invoice,account.full.reconcile.group.invoice,account.model_account_full_reconcile,base.group_user,1,1,1,0
+access_account_full_reconcile,account.full.reconcile,account.model_account_full_reconcile,base.group_user,1,1,1,1

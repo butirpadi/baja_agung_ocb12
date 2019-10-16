@@ -1,0 +1,50 @@
+<odoo>
+    <data>
+        <!-- bja.expense form view -->
+        <record id="bja_expense_view_form" model="ir.ui.view">
+            <field name="name">bja.expense.view.form</field>
+            <field name="model">bja.expense</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <header>
+                        <button type="object" name="action_confirm" states="draft" class="btn btn-primary" string="Confirm" />
+
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="expense_category_id" options="{'no_open': True, 'no_create': True}" />
+                                <field name="desc" />
+                                <field name="amount" widget="monetary" />
+                            </group>
+                            <group>
+                                <field name="date" />
+                                <field name="partner_id" />
+                            </group>
+
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="bja_expense_action" model="ir.actions.act_window">
+            <field name="name">Expense Entries</field>
+            <field name="res_model">bja.expense</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="bja_expense_menu_act" name="Expense Entries" parent="bja_expense_menu_root" action="bja_expense_action" sequence="2"/>
+
+    </data>
+</odoo>

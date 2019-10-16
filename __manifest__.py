@@ -24,6 +24,8 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        # Data
+        'data/ir_sequence_data.xml',
         # 'views/views.xml',
         'views/product_template_view.xml',
         'views/product_category_view.xml',
@@ -33,7 +35,12 @@
         'views/purchase_view.xml',
         'views/stock_picking_view.xml',
         'views/account_invoice_view.xml',
+        'views/bja_expense_category.xml',
+        'views/bja_expense_view.xml',
         'views/hide_menu_view.xml',
+        # reports
+        'reports/sale_order_report.xml',
+        'reports/action_report.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

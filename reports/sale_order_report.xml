@@ -1,0 +1,250 @@
+<odoo>
+    <data>
+
+        <template id="bja_sale_order_report">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.basic_layout">
+                    <div class="page" style="font-size: 10pt;">
+                        <style type="text/css">
+                        table.table-bordered, table.table-bordered thead tr th, table.table-bordered tbody tr td {
+                            border: black thin solid !important;
+                        }
+                        table.table thead tr th{
+                            text-align:center;
+                            vertical-align:middle;
+                        }
+
+                        table.table-so-desc tbody tr td{
+                            padding:0;
+                        }
+                        </style>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <table class="table table-sm table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <span t-field="user.company_id.name" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span t-field="user.company_id.street" />
+                                                <![CDATA[&nbsp;]]><br/>
+                                                <span t-field="user.company_id.street2" />
+                                                <![CDATA[&nbsp;]]><br/>
+                                                <span t-field="user.company_id.city" />
+                                                <![CDATA[&nbsp;]]>
+                                                <span t-field="user.company_id.state_id" />
+                                                <![CDATA[&nbsp;]]>
+                                                <span t-field="user.company_id.country_id" />
+                                                <![CDATA[&nbsp;]]>
+                                                <span t-field="user.company_id.zip" />
+                                                <![CDATA[&nbsp;]]><br/>
+                                                <span>Telp : </span><span t-field="user.company_id.phone" />
+                                                <span> Fax : </span><span t-field="user.company_id.phone" />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <![CDATA[&nbsp;]]>
+                                <br/>
+                            </div>
+                            <div class="col-6 text-right">
+                                <h3>SALES ORDER</h3>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-5">
+                                <table class="table table-sm table-borderless table-so-desc">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <strong>No. Order</strong>
+                                            </td>
+                                            <td>:</td>
+                                            <td>
+                                                <span t-field="doc.name" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>Tanggal</strong>
+                                            </td>
+                                            <td>:</td>
+                                            <td>
+                                                <span t-field="doc.date_order" t-options='{"format": "dd MMM yyyy"}' />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>Payment Term</strong>
+                                            </td>
+                                            <td>:</td>
+                                            <td>
+                                                <span t-field="doc.payment_term_id" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>Salesman</strong>
+                                            </td>
+                                            <td>:</td>
+                                            <td>
+                                                <span t-field="doc.employee_id.name" />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-2">
+
+                            </div>
+                            <div class="col-5">
+                                <table class="table table-sm table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <strong>Kepada : </strong>
+                                                <br/>
+                                                <span t-field="doc.partner_id.name" />
+                                                <br/>
+                                                <span t-if="doc.partner_id.street" t-field="doc.partner_id.street" />
+                                                <br/>
+                                                <span t-if="doc.partner_id.street2" t-field="doc.partner_id.street2" />
+                                                <br t-if="doc.partner_id.street2" />
+                                                <span t-if="doc.partner_id.city" t-field="doc.partner_id.city" />
+                                                <![CDATA[&nbsp;]]>
+                                                <span t-if="doc.partner_id.state_id" t-field="doc.partner_id.state_id" />
+                                                <![CDATA[&nbsp;]]>
+                                                <span t-if="doc.partner_id.country_id" t-field="doc.partner_id.country_id" />
+                                                <![CDATA[&nbsp;]]>
+                                                <span t-if="doc.partner_id.zip" t-field="doc.partner_id.zip" />
+                                                <![CDATA[&nbsp;]]>
+                                                <br t-if="doc.partner_id.zip" />
+                                                <span t-if="doc.partner_id.phone">Phone : </span>
+                                                <span t-if="doc.partner_id.phone" t-field="doc.partner_id.phone" />
+                                                <![CDATA[&nbsp;]]>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <![CDATA[&nbsp;]]>
+                                <br/>
+                                <br/>
+
+                                <table class="table table-sm table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">NO</th>
+                                            <th class="text-center">NAMA BARANG</th>
+                                            <th class="text-center">SATUAN</th>
+                                            <th class="text-center">BERAT</th>
+                                            <th class="text-center">JUMLAH</th>
+                                            <th class="text-center">HARGA</th>
+                                            <th class="text-center">HARGA UNIT</th>
+                                            <th class="text-center">JUMLAH</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-set="rownum" t-value="1"/>
+                                        <t t-set="jumlah_subtotal" t-value="0"/>
+                                        <t t-foreach="doc.order_line" t-as="line">
+                                            <tr>
+                                                <td>
+                                                    <t t-esc="rownum" />
+                                                </td>
+                                                <td>
+                                                    <span t-field="line.product_id.name" />
+                                                </td>
+                                                <td>
+                                                    <span t-field="line.product_id.bja_product_uom_id.name" />
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-field="line.product_id.weight" />
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-esc="'{0:,.2f}'.format(line.product_uom_qty)" />
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-esc="'{0:,.2f}'.format(line.price_weight)" />
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-esc="'{0:,.2f}'.format(line.price_unit)" />
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-esc="'{0:,.2f}'.format(line.price_subtotal)" />
+                                                </td>
+                                            </tr>
+                                            <t t-set="rownum" t-value="rownum + 1"/>
+                                            <t t-set="jumlah_subtotal" t-value="jumlah_subtotal + line.price_subtotal"/>
+                                        </t>
+                                        <tr>
+                                            <td colspan="6" rowspan="3">
+                                                <strong>Catatan : </strong>
+                                                <br/>
+                                                <i t-field="doc.note" />
+                                            </td>
+                                            <td>
+                                                <strong>Jumlah</strong>
+                                            </td>
+                                            <td class="text-right" >
+                                                <span t-esc="'{0:,.2f}'.format(jumlah_subtotal)" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>Diskon</strong>
+                                            </td>
+                                            <td class="text-right" >
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>Total</strong>
+                                            </td>
+                                            <td class="text-right" >
+
+                                            </td>
+                                        </tr>
+                                        <!-- <tr>
+                                            <td colspan="2" >
+                                                <strong>Diterima oleh,</strong>
+                                            </td>
+                                            <td colspan="2" >
+                                                <strong>Kepala Gudang,</strong>
+                                            </td>
+                                            <td colspan="2" >
+                                                <strong>Pengirim,</strong>
+                                            </td>
+                                            <td colspan="2" rowspan="2" >
+                                                <i>Semua pembayaran baru dianggap sah apabila : </i>
+                                                <i>1. Sudah diberikan faktur asli/tanda terima resmi dari perusahaan.</i>
+                                                <i>2. Barang yang sudah dibeli tidak dapat ditukar kecuali ada perjanjian.</i>
+                                                <i>3. Pembayaran dengan BG/Cek sudah dapat dicarikan pada rekening kami.</i>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" ></td>
+                                            <td colspan="2" ></td>
+                                            <td colspan="2" ></td>
+                                        </tr> -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

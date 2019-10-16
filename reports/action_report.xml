@@ -1,0 +1,134 @@
+<odoo>
+    <data>
+        <record model="report.paperformat" id="bja_order_paper_format">
+            <field name="name">bja_order_paper_format</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_width">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">10</field>
+            <field name="margin_right">7</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">0</field>
+            <field name="dpi">96</field>
+        </record>
+       
+        <record model="report.paperformat" id="bja_paperformat_manufacture_order">
+            <field name="name">bja_paperformat_manufacture_order</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_width">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">30</field>
+            <field name="margin_right">7</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">22</field>
+            <field name="dpi">96</field>
+        </record>
+        
+        <record model="report.paperformat" id="bja_blance_po_format">
+            <field name="name">bja_blance_po_format</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_width">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">15</field>
+            <field name="margin_right">7</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">10</field>
+            <field name="dpi">96</field>
+        </record>
+
+        
+        <!-- <report 
+            id="action_report_bukti_jurnal" 
+            model="account.move" 
+            string="Bukti Jurnal" 
+            report_type="qweb-pdf" 
+            attachment_use="False"
+            print_report_name="'Bukti_Jurnal_%s' % object.name" 
+            name="baja_agung_ocb12.report_bukti_journal" 
+            file="baja_agung_ocb12.report_bukti_journal"
+            paperformat="bja_paperformat_manufacture_order" />
+        
+        
+        <report 
+            id="action_report_bja_journal_voucher" 
+            model="account.move" 
+            string="Voucher" 
+            report_type="qweb-pdf" 
+            attachment_use="False"
+            print_report_name="'Voucher_%s' % object.name" 
+            name="baja_agung_ocb12.bja_journal_voucher_report" 
+            file="baja_agung_ocb12.bja_journal_voucher_report"
+            paperformat="bja_paperformat_manufacture_order" />
+
+        <report
+            id="action_report_balance_purchase"
+            model="balance.purchase.report"
+            string="Balance PO"
+            report_type="qweb-html"
+            print_report_name="'Balance_PO_%s' % object.date_start" 
+            name="baja_agung_ocb12.balance_purchase_report_template"
+            file="baja_agung_ocb12.balance_purchase_report_template"
+            paperformat="bja_blance_po_format" />
+        /> -->
+
+        <report 
+            id="action_report_bja_sale_order" 
+            model="sale.order" 
+            string="Sales Order" 
+            report_type="qweb-pdf" 
+            attachment_use="False"
+            print_report_name="'Sales_Order_%s' % object.name" 
+            name="baja_agung_ocb12.bja_sale_order_report" 
+            file="baja_agung_ocb12.bja_sale_order_report"
+            paperformat="bja_order_paper_format" />
+
+        <!-- hide purchase report action menu -->
+        <report 
+            string="Request for Quotation" 
+            id="purchase.report_purchase_quotation" 
+            model="purchase.order" 
+            report_type="qweb-pdf"
+            name="purchase.report_purchasequotation" 
+            file="purchase.report_purchasequotation"
+            print_report_name="'Request for Quotation - %s' % (object.name)"
+            menu="False"
+        />
+
+        <report 
+            string="Purchase Order" 
+            id="purchase.action_report_purchase_order" 
+            model="purchase.order" 
+            report_type="qweb-pdf"
+            name="purchase.report_purchaseorder" 
+            file="purchase.report_purchaseorder"
+            print_report_name="
+                (object.state in ('draft', 'sent') and 'Request for Quotation - %s' % (object.name) or
+                'Purchase Order - %s' % (object.name))"
+            menu="False"
+        />
+
+        <report 
+            id="sale.action_report_saleorder"
+            string="Quotation / Order"
+            model="sale.order" 
+            report_type="qweb-pdf"
+            file="sale.report_saleorder" 
+            name="sale.report_saleorder"
+            print_report_name="(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or 'Order - %s' % (object.name)"
+            menu="False"
+        />
+
+    </data>
+</odoo>
