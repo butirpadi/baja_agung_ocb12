@@ -43,20 +43,28 @@
                 </xpath>
 
                 <xpath expr="//field[@name='partner_id']" position="after">
-                    <field name="employee_id"/>
+                    <field name="employee_id" options="{'no_create_edit': True, 'no_create': True, 'no_edit' : True, 'no_open':True}" />
                 </xpath>
 
                 <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="after">
                     <field name="bja_product_uom_id" />
                 </xpath>
-                
+
                 <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
-                
+
                 <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="before">
                     <field name="price_weight" />
                     <field name="product_weight" />
+                </xpath>
+
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="options">{'always_reload':True, 'no_create_edit': True, 'no_create': True, 'no_edit' : True, 'no_open':True}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
+                    <attribute name="options">{'no_create_edit': True, 'no_create': True, 'no_edit' : True, 'no_open':True}</attribute>
                 </xpath>
 
             </field>
@@ -79,31 +87,31 @@
             <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
             <field name="priority">20</field>
             <field name="arch" type="xml">
-                <field name="user_id" position="attributes" >
+                <field name="user_id" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </field>
-                <field name="expected_date" position="attributes" >
+                <field name="expected_date" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </field>
-                <field name="user_id" position="before" >
+                <field name="user_id" position="before">
                     <field name="employee_id"/>
                 </field>
             </field>
         </record>
-        
+
         <record model="ir.ui.view" id="bja_view_order_tree_on_sale">
             <field name="name">bja_view_order_tree_on_sale</field>
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_tree"/>
             <field name="priority">22</field>
             <field name="arch" type="xml">
-                <field name="user_id" position="attributes" >
+                <field name="user_id" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </field>
-                <field name="expected_date" position="attributes" >
+                <field name="expected_date" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </field>
-                <field name="user_id" position="before" >
+                <field name="user_id" position="before">
                     <field name="employee_id"/>
                 </field>
                 <xpath expr="//field[@name='confirmation_date']" position="before">
@@ -125,17 +133,17 @@
             <field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation"/>
             <field name="priority">20</field>
             <field name="arch" type="xml">
-                <filter name="salesperson" position="after" >
+                <filter name="salesperson" position="after">
                     <filter name="group_by_salesman" string="Salesman" context="{'group_by':'employee_id'}"/>
                 </filter>
-                <filter name="salesperson" position="attributes" >
+                <filter name="salesperson" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </filter>
             </field>
         </record>
 
         <!-- replace sale action -->
-        <record id="sale.action_orders" model="ir.actions.act_window">
+        <!-- <record id="sale.action_orders" model="ir.actions.act_window">
             <field name="name">Sales Orders</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">sale.order</field>
@@ -152,7 +160,31 @@
                     Once the quotation is confirmed, it becomes a sales order.<br/> You will be able to create an invoice and collect the payment.
                 </p>
             </field>
+        </record> -->
+
+        <!-- Add new action for replace origin -->
+        <record id="bja_sale_action_orders" model="ir.actions.act_window">
+            <field name="name">Orders</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <!-- <field name="search_view_id" ref="sale.sale_order_view_search_inherit_sale"/> -->
+            <field name="priority">20</field>
+            <field name="context">{}</field>
+            <field name="domain">[]</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new quotation, the first step of a new sale!
+                </p>
+                <p>
+                    Once the quotation is confirmed, it becomes a sales order.<br/>
+ You will be able to create an invoice and collect the payment.
+                </p>
+            </field>
         </record>
+
+        <menuitem id="bja_menu_sale_order" name="Sales Orders" action="bja_sale_action_orders" parent="sale.sale_order_menu" sequence="3" groups="sales_team.group_sale_salesman"/>
 
         <!-- replace customer on sale action -->
         <record id="base.action_partner_form" model="ir.actions.act_window">
